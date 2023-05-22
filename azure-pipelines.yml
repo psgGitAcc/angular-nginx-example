@@ -43,7 +43,7 @@ stages:
           inputs:
             awsCredentials: 'psgUser'
             regionName: 'eu-north-1'
-            imageSource: 'imageId'
+            sourceImageName: 'ang-nginx-webapp'
             imageId: '$(Build.Repository.Name):v1'
             repositoryName: 'frontend/web-app2'
             autoCreateRepository: true
