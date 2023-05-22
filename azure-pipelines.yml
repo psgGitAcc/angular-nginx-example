@@ -27,14 +27,17 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+          
     - task: ECRPushImage@1
       inputs:
         awsCredentials: 'psgUser'
         regionName: 'eu-north-1'
         imageSource: 'imageId'
-        imageId: '$(Build.Repository.Name):latest'
+        imageId: '$(Build.Repository.Name):v1'
         repositoryName: 'frontend/webapp2'
         autoCreateRepository: true
+
+
 
 
 
