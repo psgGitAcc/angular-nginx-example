@@ -34,7 +34,7 @@ stages:
         awsCredentials: 'psgUser'
         regionName: 'eu-north-1'
         imageSource: 'imagename'
-        sourceImageTag: 
+        sourceImageTag: ''
         repositoryName: 'frontend/web-app2'
         pushTag: 'v1'
         autoCreateRepository: true
