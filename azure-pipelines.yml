@@ -39,12 +39,12 @@ stages:
             imageTag: 'v1'
             
         - task: ECRPushImage@1
-          displayName: push
           inputs:
             awsCredentials: 'psgUser'
             regionName: 'eu-north-1'
+            imageSource: 'imagename'
             sourceImageName: 'ang-nginx-ui'
-            imageName: '$(Build.Repository.Name):v1'
+            sourceImageTag: 'v1'
             repositoryName: 'frontend/web-app2'
             autoCreateRepository: true
 
