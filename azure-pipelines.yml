@@ -27,14 +27,47 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-
-           
     - task: ECRPushImage@1
       inputs:
         awsCredentials: 'psgUser'
         regionName: 'eu-north-1'
-        imageSource: 'imagename'
-        sourceImageTag: 'ang-nginx-ui:latest 864227929192.dkr.ecr.us-east-2.amazonaws.com/frontend/web-app'
-        repositoryName: 'frontend/web-app2'
-        pushTag: 'v1'
+        imageSource: 'imageId'
+        imageId: '$(Build.Repository.Name):latest'
+        repositoryName: 'frontend/webapp2'
         autoCreateRepository: true
+
+
+
+# trigger:
+#   branches:
+#     include:
+#       - main
+
+# jobs:
+#   - job: BuildAndPushDockerImage
+#     displayName: "Build and Push Docker Image"
+#     pool:
+#       vmImage: 'ubuntu-latest'
+
+#     steps:
+#       - checkout: self
+
+#       - task: Docker@2
+#         displayName: 'Build Docker Image'
+#         inputs:
+#           containerRegistry: 'yourContainerRegistry'
+#           repository: 'yourRepository'
+#           command: 'build'
+#           Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+#           tags: 'latest'
+
+#       - task: Docker@2
+#         displayName: 'Push Docker Image to ECR'
+#         inputs:
+#           containerRegistry: 'yourContainerRegistry'
+#           repository: 'yourRepository'
+#           command: 'push'
+#           tags: 'latest'
+#           azureSubscriptionEndpoint: 'yourAzureSubscriptionEndpoint'
+#           azureContainerRegistry: 'yourAzureContainerRegistry'
+
