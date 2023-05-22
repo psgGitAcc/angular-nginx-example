@@ -20,25 +20,31 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     command: build
+    #     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: |
+    #      $(tag)
           
-    - task: ECRPushImage@1
-      inputs:
-        awsCredentials: 'psgUser'
-        regionName: 'eu-north-1'
-        imageSource: 'imageId'
-        imageId: '$(Build.Repository.Name):v1'
-        repositoryName: 'frontend/webapp2'
-        autoCreateRepository: true
-
-
-
+        - task: ECRPullImage@1
+          inputs:
+            awsCredentials: 'psgUser'
+            regionName: 'eu-north-1'
+            repository: 'frontend/webapp'
+            imageSource: 'imagetag'
+            imageTag: 'v1'
+            
+        - task: ECRPushImage@1
+          inputs:
+            awsCredentials: 'psgUser'
+            regionName: 'eu-north-1'
+            imageSource: 'imageId'
+            imageId: '$(Build.Repository.Name):v1'
+            repositoryName: 'frontend/webapp2'
+            autoCreateRepository: true
 
 
 # trigger:
