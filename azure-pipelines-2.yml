@@ -18,7 +18,7 @@ steps:
   inputs:
     awsCredentials: 'psgUser'  # Replace with the name of your AWS service connection in Azure DevOps
     regionName: 'eu-north-1'  # Replace with your AWS region name
-    imageSource: 'build'  # Specify 'build' to use the Docker image built in the previous step
+    #imageSource: 'build'  # Specify 'build' to use the Docker image built in the previous step
     repositoryName: 'frontend/web-app3'  # Replace with your Amazon ECR repository name
     imageTag: 'v1'  # Replace with the tag for the Docker image
     autoCreateRepository: true
