@@ -30,7 +30,7 @@ stages:
     #      $(tag)
           
         - task: ECRPullImage@1
-          displayName: pull
+          displayName: pull from ecr repo 1
           inputs:
             awsCredentials: 'psgUser'
             regionName: 'eu-north-1'
@@ -39,6 +39,7 @@ stages:
             imageTag: 'v1'
             
         - task: ECRPushImage@1
+          displayName: push to ecr repo 2
           inputs:
             awsCredentials: 'psgUser'
             regionName: 'eu-north-1'
