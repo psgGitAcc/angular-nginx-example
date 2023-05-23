@@ -11,7 +11,7 @@ steps:
   displayName: 'Build Docker image'
   inputs:
     command: 'build'
-    dockerfile: 'angular-nginx-example/'  # Replace with the path to your Dockerfile
+    dockerfile: 'angular-nginx-example/Dockerfile'  # Replace with the path to your Dockerfile
 
 - task: ECRPushImage@1
   displayName: 'Push Docker image to AWS ECR'
