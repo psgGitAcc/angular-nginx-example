@@ -1,60 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  branches:
+    include:
+      - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-# this pipeline has one implicit stage
-jobs:
-- job: A
-  steps:
-  - script: |
-     sudo apt-get update
-     sudo apt install git-all
-    displayName: 'install git'
+steps:
+- task: Docker@2
+  displayName: 'Build Docker image'
+  inputs:
+    command: 'build'
+    dockerfile: 'angular-nginx-example/'  # Replace with the path to your Dockerfile
 
-- job: B
-  steps:
-  - script: |
-      git clone https://github.com/bbachi/angular-nginx-example.git
-      cd my-app
-      npm install
-      npm start
-    displayName: 'clone repo, install dependencies'
-
-  - script: |
-      sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    displayName: 'install Docker'
-  
-- job: C
-  steps:
-  - script: |
-     sudo apt install git-all
-     docker build -t ang-nginx-ui .
-     docker run -d --name ang-nginx-webapp -p 80:80 ang-nginx-ui
-     docker images
-    displayName: 'build image'
-
-  - script: |
-      echo Add other tasks to build, test, and deploy your project.
-      echo See https://aka.ms/yaml
-    displayName: 'Run a multi-line script'
-
-  - task: ECRPushImage@1
-    inputs:
-      awsCredentials: 'psgUser'
-      regionName: 'eu-north-1'
-      imageSource: 'imagename'
-      sourceImageName: 'ang-nginx-ui'
-      sourceImageTag: 'v1'
-      repositoryName: 'frontend/web-app3'
-      autoCreateRepository: true
-
-
-
-
+- task: ECRPushImage@1
+  displayName: 'Push Docker image to AWS ECR'
+  inputs:
+    awsCredentials: 'psgUser'  # Replace with the name of your AWS service connection in Azure DevOps
+    regionName: 'eu-north-1'  # Replace with your AWS region name
+    imageSource: 'build'  # Specify 'build' to use the Docker image built in the previous step
+    repositoryName: 'frontend/web-app3'  # Replace with your Amazon ECR repository name
+    imageTag: 'v1'  # Replace with the tag for the Docker image
+    autoCreateRepository: true
