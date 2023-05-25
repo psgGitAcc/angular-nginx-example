@@ -19,8 +19,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      imageId=$(docker inspect --format='{{.ID}}' $(dockerBuild.ImageName))
-      echo "##vso[task.setvariable variable=imageName]$imageId"
+      sourceImageName=$(docker inspect --format='{{.ID}}' $(dockerBuild.ImageName))
+      echo "##vso[task.setvariable variable=imageName]$sourceImageName"
 
 - task: ECRPushImage@1
   displayName: 'Push Docker image to AWS ECR'
@@ -28,7 +28,7 @@ steps:
     awsCredentials: 'psgUser' 
     regionName: 'eu-north-1'
     repositoryName: 'frontend/web-app3'  
-    imageName: '$(imageName)' #pass imageID variable set earlier
-    imageTag: 'v1'  
+    sourceImageName: '$(sourceImageName)' #pass imageID variable set earlier
+    sourceImageTag: 'v1'  
     autoCreateRepository: true
 
