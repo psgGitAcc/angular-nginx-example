@@ -47,21 +47,21 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
-    tags: 'v1'
+    tags: '780356874729.dkr.ecr.eu-north-1.amazonaws.com/frontend/web-app:latest'
 
 - task: Bash@3
   displayName: 'Display Image Name'
-  inputs:
-    targetType: 'inline'
-    script: |
-      echo "Image Name: $(imageName)"
+  #inputs:
+    # targetType: 'inline'
+    # script: |
+    #   echo "Image Name: $(imageName)"
 
 - task: ECRPushImage@1
   displayName: 'Push to ECR'
   inputs:
     awsCredentials: 'psgUser'
     regionName: 'eu-north-1'
-    sourceImageName: '$(imageName)'
+    sourceImageName: '780356874729.dkr.ecr.eu-north-1.amazonaws.com/frontend/web-app:latest'
     sourceImageTag: 'v1'
     repositoryName: 'frontend/web-app3'
     autoCreateRepository: true
