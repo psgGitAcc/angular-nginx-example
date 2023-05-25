@@ -45,9 +45,10 @@ steps:
 - task: Docker@2
   displayName: 'Build Docker image'
   inputs:
+    repository: '780356874729.dkr.ecr.eu-north-1.amazonaws.com/frontend/web-app'
     command: 'build'
     Dockerfile: '**/Dockerfile'
-    tags: '780356874729.dkr.ecr.eu-north-1.amazonaws.com/frontend/web-app:latest'
+    tags: 'v1'
 
 # - task: Bash@3
 #   displayName: 'Display Image Name'
