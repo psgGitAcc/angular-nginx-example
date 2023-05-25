@@ -48,9 +48,6 @@ steps:
     command: 'build'
     Dockerfile: '**/Dockerfile'
     tags: 'v1'
-    # containerRegistry: 'yourContainerRegistry'  # Replace with your Azure Container Registry
-    # repository: 'yourRepository'  # Replace with your repository name
-    # addPipelineData: true  # This enables capturing pipeline data as output variables
 
 - task: Bash@3
   displayName: 'Display Image Name'
