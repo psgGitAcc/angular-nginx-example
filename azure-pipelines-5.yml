@@ -1,0 +1,38 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: imageName
+    value: ''
+
+steps:
+  - task: Docker@2
+    displayName: 'Build Docker image'
+    inputs:
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+      tags: 'v1'
+      addPipelineData: true  # This enables capturing pipeline data as output variables
+
+
+  - task: Bash@3
+    displayName: 'Display Image Name'
+    inputs:
+      targetType: 'inline'
+      script: |
+        echo "Image Name: $(imageName)"
+
+  - task: ECRPushImage@1
+    displayName: 'Push to ECR'
+    inputs:
+      awsCredentials: 'psgUser'
+      regionName: 'eu-north-1'
+      sourceImageName: '$(imageName)'
+      sourceImageTag: 'v1'
+      repositoryName: 'frontend/web-app3'
+      autoCreateRepository: true
